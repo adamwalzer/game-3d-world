@@ -1,0 +1,434 @@
+@import 'variables';
+@import 'mixins';
+
+#printer {
+    .targets {
+        position: absolute;
+        background-image: url($image + 'img.leftbox.png');
+        background-repeat: no-repeat;
+        background-size: contain;
+        padding: 30px;
+        width: 300px;
+        height: 300px;
+        font-family: 'Source Sans Pro';
+
+        span {
+            text-decoration: underline;
+            color: $printer-color;
+        }
+    }
+
+    .target {
+        div {
+            display: none;
+            transition: opacity .5s;
+            opacity: 0;
+            margin: 10px 0;
+            background-image: url($sprite + 'sprite.game2.brokenobj.png');
+            background-repeat: no-repeat;
+            background-position: 0 0;
+            background-size: 1200px;
+            height: 150px;
+        }
+
+        $targets: tire link cup phone tooth;
+        @for $i from 1 through 5 {
+            $target: nth($targets, $i);
+
+            &.#{$target} [name=#{$target}] {
+                display: block;
+                opacity: 1;
+            }
+
+            [name=#{$target}] {
+                background-position: #{10 - 245 * ($i - 1)}px 0;
+            }
+        }
+    }
+
+    .dropzones {
+        position: absolute;
+        top: 0;
+        left: 200px;
+        background-image: url($image + 'img.printer.png');
+        background-repeat: no-repeat;
+        background-size: contain;
+        padding: 90px 230px 220px 200px;
+        width: 830px;
+        height: 540px;
+
+        div {
+            position: relative;
+            width: 100%;
+            height: 100%;
+
+            &::before {
+                display: none;
+                position: absolute;
+                bottom: 55px;
+                left: 117px;
+                transition: height .25s, left .5s, bottom .5s, transform .5s;
+                background-image: url($sprite + 'sprite.game2.completeitems.png');
+                background-repeat: no-repeat;
+                background-position: 0 bottom;
+                background-size: 2800px;
+                width: 200px;
+                height: 0;
+                content: '';
+            }
+
+            $heights: 60 80 120;
+            @for $i from 1 through 3 {
+                &.layer#{$i}:before {
+                    height: #{nth($heights, $i)}px;
+                }
+            }
+
+            $objects: umbrella glasses tire shovel link bucket boots gloves whistle cup phone piece tooth ball;
+            $obj-nums:             6             7        1            8        2            9        10         11            12     3         4        13         5     14;
+            @for $i from 1 through 14 {
+                $object: nth($objects, $i);
+                $num: nth($obj-nums, $i) - 1;
+
+                &.#{$object}:before {
+                    display: block;
+                    background-position: -#{200 * $num}px bottom;
+                }
+            }
+
+            &.transition {
+                &::before {
+                    height: 120px;
+                }
+
+                $answers: tire link cup phone tooth;
+                $lefts:        260    330 376     346     380;
+                $bottoms:     60     80 117        80        74;
+                $scales:     1.2        1    .5    1.25        .3;
+                @for $i from 1 through 5 {
+                    &.#{nth($answers, $i)}:before {
+                        bottom: #{nth($bottoms, $i)}px;
+                        left: -#{nth($lefts, $i)}px;
+                        transform: scale(#{nth($scales, $i)});
+                    }
+                }
+            }
+        }
+    }
+
+    .bottom {
+        position: absolute;
+        top: 370px;
+        left: 240px;
+        font-family: 'Source Sans Pro';
+
+        span {
+            text-decoration: underline;
+            color: $printer-color;
+        }
+    }
+
+    .slider {
+        display: flex;
+        position: relative;
+        width: 600px;
+        height: 150px;
+        align-items: center;
+
+        button {
+            position: relative;
+            z-index: 1;
+            background-image: url($sprite + 'sprite.game2.carouselarrow.png');
+            background-repeat: no-repeat;
+            background-size: 100px;
+            width: 50px;
+            height: 50px;
+
+            $directions: prev next;
+            @for $i from 1 through 2 {
+                &.#{nth($directions, $i)}-slide {
+                    background-position: -#{50 * ($i - 1)}px 0;
+
+                    &:hover {
+                        background-position: -#{50 * ($i - 1)}px -60px;
+                    }
+                }
+            }
+        }
+
+        .area {
+            display: inline-block;
+            position: relative;
+            width: 500px;
+            height: 100%;
+            overflow: hidden;
+
+            &:hover {
+                overflow: visible;
+            }
+        }
+
+        .content {
+            display: flex;
+            position: relative;
+            transition: margin .5s;
+            width: 100%;
+            height: 100%;
+            flex-wrap: nowrap;
+
+            > div {
+                display: flex;
+                position: absolute;
+                transition: opacity .5s;
+                width: 100%;
+                height: 100%;
+                flex-wrap: nowrap;
+                justify-content: space-around;
+            }
+        }
+    }
+
+    .draggable {
+        display: inline-block;
+        position: relative;
+        transition: opacity .5s;
+        margin: 15px;
+        width: 101px;
+        height: 101px;
+
+        &.DRAGGING {
+            z-index: 3;
+        }
+
+        &.CORRECT {
+            opacity: 0;
+        }
+
+        &::before {
+            display: block;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translateX(-50%) translateY(-50%);
+            background-image: url($sprite + 'sprite.game2.png');
+            background-repeat: no-repeat;
+            background-size: 2800px;
+            width: 101px;
+            height: 101px;
+            content: '';
+        }
+
+        $messages: umbrella glasses tire shovel
+                             link bucket boots gloves
+                             whistle cup phone piece
+                             tooth ball;
+        @for $i from 1 through 14 {
+            &[data-message=#{nth($messages, $i)}]:before {
+                background-position: -#{50 + 200 * ($i - 1)}px -48px;
+            }
+
+            &[data-message=#{nth($messages, $i)}]:hover:before {
+                background-position: -#{35 + 200 * ($i - 1)}px -235px;
+                width: 130px;
+                height: 124px;
+            }
+        }
+    }
+
+    .reveal {
+        display: none;
+        position: absolute;
+        top: 0;
+        left: 0;
+        transition: opacity .5s, z-index 0s .5s;
+        opacity: 0;
+        z-index: -1;
+        background-color: $printer-reveal-background;
+        background-repeat: no-repeat;
+        background-position: 0 0;
+        background-size: contain;
+        width: 100%;
+        height: 100%;
+
+        &.OPEN {
+            display: block;
+            transition: opacity .5s, z-index 0s;
+            opacity: 1;
+            z-index: 1;
+        }
+
+        ul {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        li {
+            display: none;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translateX(-50%) translateY(-50%);
+            margin-left: 5px;
+            background-image: url($image + 'img.popup.png');
+            background-repeat: no-repeat;
+            background-size: contain;
+            padding: 35px 55px 60px 50px;
+            width: 500px;
+            height: 400px;
+            text-align: left;
+
+            &.OPEN {
+                display: block;
+            }
+
+            h3 {
+                @include text-stroke(3, $purple);
+                line-height: 1;
+                color: $green;
+                font-size: 72px;
+            }
+
+            span {
+                text-decoration: underline;
+                color: $green;
+            }
+
+            div {
+                font-family: 'Source Sans Pro';
+                font-size: 28px;
+                font-weight: bold;
+            }
+
+            button {
+                margin-top: 45px;
+                background-image: url($sprite + 'sprite.nav.png');
+                background-repeat: no-repeat;
+                background-position: -740px 0;
+                background-size: 1400px;
+                width: 270px;
+                height: 80px;
+
+                &:hover {
+                    background-position: -740px -84px;
+                }
+            }
+
+            &[data-ref=instructions] {
+                h3 {
+                    @include text-stroke(2, $dark-green);
+                    font-size: 58px;
+                }
+
+                button {
+                    background-position: -395px 0;
+
+                    &:hover {
+                        background-position: -395px -84px;
+                    }
+                }
+            }
+
+            &[data-ref=drag-it-here] {
+                background-color: $printer-reveal-background;
+                background-image: url($image + 'img.guide.png');
+                background-position: 380px 0;
+                background-size: 400px;
+                padding: 330px 50px 50px 270px;
+                width: 100%;
+                height: 100%;
+                text-align: center;
+
+                div {
+                    font-size: 24px;
+                }
+            }
+
+            &[data-ref=tire] {
+                button {
+                    margin-top: 65px;
+                }
+            }
+
+            &[data-ref=link] {
+                h3 {
+                    font-size: 42px;
+                }
+
+                button {
+                    margin-top: 35px;
+                }
+            }
+
+            &[data-ref=cup] {
+                h3 {
+                    font-size: 64px;
+                }
+
+                button {
+                    margin-top: 35px;
+                }
+            }
+
+            &[data-ref=phone] {
+                h3 {
+                    font-size: 64px;
+                }
+
+                button {
+                    margin-top: 35px;
+                }
+            }
+
+            &[data-ref=tooth] {
+                background-image: url($image + 'img.winframe.png');
+                width: 600px;
+                height: 500px;
+
+                h3 {
+                    font-size: 68px;
+                }
+
+                button {
+                    margin-top: 30px;
+                }
+            }
+
+            &[data-ref=try-again] {
+                h3 {
+                    @include text-stroke(6, $purple);
+                    color: $white;
+                    font-size: 90px;
+                }
+
+                button {
+                    margin-top: 40px;
+                }
+            }
+        }
+
+        &.open-tire,
+        &.open-link,
+        &.open-cup,
+        &.open-phone,
+        &.open-tooth {
+            &::before {
+                position: absolute;
+                top: 0;
+                left: 0;
+                opacity: .4;
+                background-image: url($image + 'bkg.3.jpg');
+                background-repeat: no-repeat;
+                background-position: 0 0;
+                background-size: contain;
+                width: 100%;
+                height: 100%;
+                content: '';
+            }
+        }
+
+        &.open-tooth {
+            background-image: url($image + 'img.sparkle.png');
+        }
+    }
+}

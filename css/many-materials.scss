@@ -1,0 +1,42 @@
+@import 'variables';
+@import 'mixins';
+
+#many-materials {
+    color: $dark-green;
+
+    .balloon {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 960px;
+    }
+
+    .words {
+        $widths: 830 640 760 630;
+        $steps: 30;
+        @include typing($widths, $steps);
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translateX(-47.5%) translateY(-25%);
+        width: 100%;
+        font-size: 36px;
+
+    }
+
+    .screen-content {
+        &::after {
+            display: block;
+            position: absolute;
+            top: 0;
+            left: 210px;
+            background-image: url($sprite + 'sprite.closeupminion.png');
+            background-repeat: no-repeat;
+            background-position: -730px 0;
+            background-size: 2200px;
+            width: 600px;
+            height: 410px;
+            content: '';
+        }
+    }
+}

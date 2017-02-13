@@ -1,0 +1,79 @@
+@import 'variables';
+@import 'mixins';
+@import 'keyframes';
+
+#imagine {
+    .question,
+    .answer {
+        display: none;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+
+        &.show {
+            display: block;
+        }
+    }
+
+    .printer {
+        position: absolute;
+        top: 0;
+        left: 0;
+        margin-left: 2.5%;
+        width: 85%;
+    }
+
+    .right {
+        position: absolute;
+        top: 70px;
+        right: 0;
+        background-image: url($image + 'intro.speech.balloon.png');
+        background-repeat: no-repeat;
+        background-size: 300px;
+    }
+
+    .words {
+        position: absolute;
+        transform: translateY(-50%);
+        transition: opacity .5s;
+        opacity: 0;
+        margin-top: 70px;
+        width: 320px;
+        text-transform: uppercase;
+        color: $imagine-green;
+        font-family: 'Molot';
+        font-size: 18px;
+
+        &.imagine {
+            $widths: 215 222 164;
+            @include typing($widths);
+        }
+
+        &.exists {
+            $widths: 220 214;
+            @include typing($widths);
+        }
+
+        &.start {
+            opacity: 1;
+        }
+    }
+
+    .text {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translateX(-50%) translateY(-50%);
+        width: 80%;
+    }
+
+    .minion {
+        margin-top: 140px;
+        background-image: url($sprite + 'sprite.minion.png');
+        background-position: -120px -240px;
+        background-size: 3000px;
+        width: 320px;
+        height: 320px;
+    }
+}

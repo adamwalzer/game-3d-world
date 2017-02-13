@@ -1,0 +1,39 @@
+@import 'variables';
+@import 'mixins';
+
+#lets-learn {
+    .balloon {
+        position: absolute;
+        top: 50px;
+        left: 50px;
+        width: 900px;
+    }
+
+    .words {
+        $widths: 580 530 401;
+        @include typing($widths);
+
+        position: absolute;
+        top: 130px;
+        left: 165px;
+        text-transform: uppercase;
+        color: $dark-green;
+        font-family: 'Molot';
+        font-size: 52px;
+    }
+
+    .screen-content {
+        &::after {
+            display: block;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            background-image: url($sprite + 'sprite.closeupminion.png');
+            background-repeat: no-repeat;
+            background-size: 2200px;
+            width: 500px;
+            height: 410px;
+            content: '';
+        }
+    }
+}

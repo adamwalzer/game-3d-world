@@ -1,0 +1,35 @@
+@import 'variables';
+
+#bunch-of-problems {
+    .screen-content {
+        &::after {
+            display: block;
+            position: absolute;
+            top: 0;
+            left: 0;
+            background-image: url($sprite + 'sprite.closeupminion.png');
+            background-repeat: no-repeat;
+            background-position: -1470px 0;
+            background-size: 2200px;
+            width: 500px;
+            height: 300px;
+            content: '';
+        }
+    }
+
+    .balloon {
+        position: absolute;
+        top: 60px;
+        left: 80px;
+        z-index: -1;
+        width: 840px;
+    }
+
+    .words {
+        position: absolute;
+        top: 180px;
+        left: 160px;
+        color: $dark-green;
+        font-size: 60px;
+    }
+}

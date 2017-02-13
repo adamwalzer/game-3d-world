@@ -1,0 +1,28 @@
+$media-game: $media-server + 'games/3d-world/';
+$sprite: $media-game + 'sprites-animations/';
+$image: $media-game + 'image-assets/';
+$font: $media-game + 'fonts/';
+$frame: $media-game + 'frames/';
+
+$text-color: #fff;
+$imagine-green: #006d05;
+$purple: #671db0;
+$light-purple: #683eb5;
+$green: #81fe46;
+$white: #fff;
+$black: #000;
+$dark-green: #315a16;
+$transparent-black: rgba(0, 0, 0, .35);
+
+$sort-game-background: #7e7e7e;
+$sort-game-score-before: #424242;
+$sort-game-main: #4c6c7a;
+$sort-game-triangle: #10ce0e;
+$sort-game-catch-before: #0f3b1d;
+$sort-game-level-up-background: rgba(83, 31, 139, .8);
+$sort-game-level-up-h2: #26992b;
+
+$printer-color: #8ce34e;
+$printer-reveal-background: rgba(25, 37, 19, .4);
+
+$track-blue: #34515c;

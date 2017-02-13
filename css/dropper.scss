@@ -1,0 +1,42 @@
+@import 'variables';
+
+.dropper {
+    position: absolute;
+
+    .track {
+        background-color: $track-blue;
+    }
+
+    .el,
+    .items {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+    }
+
+    .el {
+        z-index: 1;
+    }
+
+    .randomizer {
+        display: none;
+    }
+
+    .items {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+    }
+
+    .catchable {
+        position: absolute;
+        top: 0;
+        transition: top .5s;
+
+        &.go {
+            top: 100px;
+        }
+    }
+}

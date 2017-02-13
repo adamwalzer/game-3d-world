@@ -1,0 +1,165 @@
+@keyframes arrow-blink {
+    0% { opacity: .2; }
+    50% { opacity: 1; }
+    100% { opacity: .2; }
+}
+
+$step: 60;
+@keyframes bin-points {
+    0% {
+        top: 0;
+        opacity: 0;
+    }
+
+    20% {
+        top: -#{$step * .2}px;
+        opacity: 1;
+    }
+
+    80% {
+        top: -#{$step * .8}px;
+        opacity: 1;
+    }
+
+    100% {
+        top: -#{$step}px;
+        opacity: 0;
+    }
+}
+
+@keyframes type1 {
+    0% {
+        opacity: 0;
+        width: 0;
+    }
+
+    1% {
+        opacity: 1;
+        width: 0;
+    }
+
+    100% {
+        opacity: 1;
+        width: 100%;
+    }
+}
+
+@keyframes type1after {
+    0% { opacity: 1; }
+    99% { opacity: 1; }
+    100% { opacity: 0; }
+}
+
+@keyframes type2 {
+    0% {
+        opacity: 0;
+        width: 0;
+    }
+
+    49% {
+        opacity: 0;
+        width: 0;
+    }
+
+    50% {
+        opacity: 1;
+        width: 0;
+    }
+
+    100% {
+        opacity: 1;
+        width: 100%;
+    }
+}
+
+@keyframes type2after {
+    0% { opacity: 0; }
+    49% { opacity: 0; }
+    50% { opacity: 1; }
+    99% { opacity: 1; }
+    100% { opacity: 0; }
+}
+
+@keyframes type3 {
+    0% {
+        opacity: 0;
+        width: 0;
+    }
+
+    66% {
+        opacity: 0;
+        width: 0;
+    }
+
+    67% {
+        opacity: 1;
+        width: 0;
+    }
+
+    100% {
+        opacity: 1;
+        width: 100%;
+    }
+}
+
+@keyframes type3after {
+    0% { opacity: 0; }
+    66% { opacity: 0; }
+    67% { opacity: 1; }
+    99% { opacity: 1; }
+    100% { opacity: 0; }
+}
+
+@keyframes type4 {
+    0% {
+        opacity: 0;
+        width: 0;
+    }
+
+    74% {
+        opacity: 0;
+        width: 0;
+    }
+
+    75% {
+        opacity: 1;
+        width: 0;
+    }
+
+    100% {
+        opacity: 1;
+        width: 100%;
+    }
+}
+
+@keyframes type4after {
+    0% { opacity: 0; }
+    74% { opacity: 0; }
+    75% { opacity: 1; }
+    99% { opacity: 1; }
+    100% { opacity: 0; }
+}
+
+@keyframes blink {
+    0% { opacity: 0; }
+    50% { opacity: 1; }
+    100% { opacity: 0; }
+}
+
+@keyframes arrow-flash {
+    0% {
+        background-position: 0 0;
+    }
+
+    33% {
+        background-position: 0 -62px;
+    }
+
+    66% {
+        background-position: 0 -124px;
+    }
+
+    100% {
+        background-position: 0 0;
+    }
+}

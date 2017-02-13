@@ -1,0 +1,520 @@
+@import 'variables';
+@import 'mixins';
+
+[id*='sort-game'] {
+    .left:not(.dropper) {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 80px;
+        height: 540px;
+
+        .score {
+            position: relative;
+            margin-top: 50px;
+            width: 100%;
+            height: 400px;
+
+            &::after {
+                position: absolute;
+                bottom: 25px;
+                left: 25px;
+                opacity: .6;
+                border-radius: 10px;
+                background-color: $sort-game-background;
+                width: 10px;
+                height: 330px;
+                content: '';
+            }
+
+            div {
+                position: relative;
+                margin: 0 auto;
+                width: 50px;
+
+                &::before {
+                    display: block;
+                    border: 6px solid $white;
+                    border-radius: 50px;
+                    background-color: $sort-game-score-before;
+                    width: 40px;
+                    height: 360px;
+                    content: '';
+                }
+
+                &::after {
+                    display: block;
+                    position: absolute;
+                    bottom: 6px;
+                    left: 6px;
+                    // scss-lint:disable VendorPrefix
+                    -webkit-transition: height .5s cubic-bezier(.53, 0, .63, 1);
+                    // scss-lint:enable VendorPrefix
+                    transition: height .5s cubic-bezier(.53, -.56, .63, 1.74);
+                    border-radius: 50px;
+                    background-color: $green;
+                    width: 40px;
+                    height: 0;
+                    content: '';
+                }
+            }
+
+            @for $i from 0 through 10 {
+                &.score-#{$i * 10} {
+                    div::after {
+                        height: #{$i * 36}px;
+                    }
+                }
+            }
+        }
+    }
+
+    .timer {
+        font-size: 14px;
+        font-weight: normal;
+
+        span {
+            display: block;
+            font-size: 28px;
+        }
+    }
+
+    .main {
+        position: absolute;
+        top: 20px;
+        left: 100px;
+        border-radius: 16px 16px 0 0;
+        background-color: $sort-game-main;
+        width: 760px;
+        height: 520px;
+        overflow: hidden;
+    }
+
+    .dropper {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+
+        .items,
+        .el {
+            left: -150px;
+            width: 150px;
+            height: 100px;
+        }
+
+        .el {
+            background-image: url($sprite + 'sprite.game1.printer.png');
+            background-size: 150px;
+        }
+
+        .left,
+        .right {
+            display: flex;
+            position: absolute;
+            top: 20px;
+            width: 80px;
+            height: 50px;
+
+            div {
+                transition: border .5s;
+                margin: 6px;
+                border-top: 10px solid transparent;
+                border-bottom: 10px solid transparent;
+                height: 0;
+            }
+        }
+
+        .left {
+            left: -40px;
+            flex-direction: row-reverse;
+
+            div {
+                border-right: 10px solid $black;
+            }
+        }
+
+        .right {
+            left: 95px;
+
+            div {
+                border-left: 10px solid $black;
+            }
+        }
+
+        &.right {
+            .right {
+                div {
+                    border-left-color: $sort-game-triangle;
+                }
+
+                @for $i from 1 through 3 {
+                    div:nth-of-type(#{$i}) {
+                        animation: arrow-blink .75s #{$i * .25}s infinite;
+                    }
+                }
+            }
+        }
+
+        &.left {
+            .left {
+                div {
+                    border-right-color: $sort-game-triangle;
+                }
+
+                @for $i from 1 through 3 {
+                    div:nth-of-type(#{$i}) {
+                        animation: arrow-blink .75s #{$i * .25}s infinite;
+                    }
+                }
+            }
+        }
+
+        .catchable {
+            $catchables: fork robot slinky nails gears key shoes cake block burger pizza truck dice lego glasses;
+            $length: length($catchables);
+            top: 70px;
+            left: 20px;
+            transition: top 1s, height .25s;
+            background-image: url($sprite + 'sprite.game1.png');
+            background-repeat: no-repeat;
+            background-size: #{100 * $length}px;
+            width: 100px;
+            height: 0;
+
+            &.starting {
+                height: 40px;
+            }
+
+            &.ready {
+                height: 50px;
+            }
+
+            &.set {
+                height: 100px;
+            }
+
+            &.go {
+                top: 550px;
+                height: 100px;
+            }
+
+            @for $i from 1 through $length {
+                &.#{nth($catchables, $i)} {
+                    background-position: #{($i - 1) * -100}px 0;
+                }
+            }
+        }
+    }
+
+    .catch {
+        div {
+            position: absolute;
+            top: 392px;
+            background-image: url($sprite + 'sprite.game1.bins.png');
+            background-repeat: no-repeat;
+            background-size: 600px;
+            width: 170px;
+            height: 130px;
+
+            &::before {
+                @include text-stroke(1, $sort-game-catch-before);
+                display: block;
+                position: absolute;
+                top: 0;
+                left: 30px;
+                z-index: 1;
+                width: 100px;
+                height: 100px;
+                font-size: 32px;
+            }
+
+            &.correct,
+            &.incorrect {
+                &::before {
+                    animation: bin-points 1s forwards linear;
+                }
+            }
+
+            &.correct {
+                &::before {
+                    background-image: url($image + 'plus.png');
+                    background-size: contain;
+                    content: '+10';
+                }
+            }
+
+            &.incorrect {
+                &::before {
+                    content: '-10';
+                }
+            }
+        }
+
+        $bins: plastic metal other;
+        $lefts: 40 300 560;
+        $background-lefts: 0 215 430;
+
+        @for $i from 1 through 3 {
+            .#{nth($bins, $i)} {
+                left: #{nth($lefts, $i)}px;
+                background-position: -#{nth($background-lefts, $i)}px 0;
+            }
+        }
+    }
+
+    .reveal {
+        position: absolute;
+        top: 0;
+        left: 0;
+        transition: opacity .5s, z-index 0s .5s;
+        z-index: -1;
+        width: 100%;
+        height: 100%;
+
+        &.OPEN {
+            transition: opacity .5s, z-index 0s;
+            z-index: 1;
+        }
+
+        ul {
+            margin: 0;
+            list-style: none;
+        }
+
+        li {
+            display: none;
+            position: absolute;
+            top: 20px;
+            left: 80px;
+
+            &.OPEN {
+                display: block;
+            }
+
+            .line {
+                background-image: url($image + 'thick.border.png');
+                background-repeat: no-repeat;
+                background-size: 100% 100%;
+            }
+
+            &[data-ref='in-this'] {
+                width: 800px;
+                height: 500px;
+
+                &::after {
+                    display: block;
+                    position: absolute;
+                    right: -15px;
+                    bottom: 0;
+                    background-image: url($sprite + 'sprite.minion.png');
+                    background-repeat: no-repeat;
+                    background-position: -600px 0;
+                    background-size: 2400px;
+                    width: 250px;
+                    height: 445px;
+                    content: '';
+                }
+
+                .frame {
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    z-index: -1;
+                    width: 100%;
+                    height: 100%;
+                }
+
+                .balloon {
+                    position: absolute;
+                    top: 50px;
+                    left: 30px;
+                    width: 600px;
+                }
+
+                .bins {
+                    position: absolute;
+                    top: 270px;
+                    left: 180px;
+                    width: 370px;
+                }
+
+                .words {
+                    position: absolute;
+                    top: 180px;
+                    left: 100px;
+                    transform: translateY(-50%);
+                    transition: opacity .5s;
+                    opacity: 0;
+                    width: 490px;
+                    color: $dark-green;
+                    font-size: 28px;
+
+                    &.show {
+                        opacity: 1;
+                    }
+
+                    &.be-sure {
+                        // scss-lint:disable NestingDepth
+                        button {
+                            display: block;
+                            margin: 10px auto 0;
+                            background-image: url($sprite + 'sprite.nav.png');
+                            background-position: 0 0;
+                            width: 300px;
+                            height: 70px;
+
+                            &:hover {
+                                background-position: 0 -72px;
+                            }
+
+                            .VOICE-OVER & {
+                                pointer-events: none;
+                            }
+                        }
+                        // scss-lint:enable NestingDepth
+                    }
+                }
+
+                .line {
+                    margin-left: -5%;
+                    width: 110%;
+                    height: 10px;
+                }
+            }
+
+            &[data-ref='level-up'] {
+                top: 0;
+                left: 0;
+                background-color: $sort-game-level-up-background;
+                background-image: url($frame + 'green.frame.png');
+                background-repeat: no-repeat;
+                background-position: 200px 120px;
+                background-size: 720px;
+                padding: 200px 120px 80px 300px;
+                width: 100%;
+                height: 100%;
+
+                &::before {
+                    position: absolute;
+                    bottom: 0;
+                    left: 0;
+                    background-image: url($sprite + 'sprite.minion.png');
+                    background-repeat: no-repeat;
+                    background-position: -1130px 2px;
+                    background-size: 1800px;
+                    width: 250px;
+                    height: 350px;
+                    content: '';
+                }
+
+                h3 {
+                    @include text-stroke(2, $white);
+                    position: absolute;
+                    top: 20px;
+                    left: 200px;
+                    letter-spacing: 5px;
+                    color: $sort-game-level-up-h2;
+                    font-size: 132px;
+                }
+
+                h4 {
+                    margin: 5px 0 15px;
+                    text-align: left;
+                    text-transform: uppercase;
+                    text-decoration: underline;
+                    text-shadow: 0 2px 10px $transparent-black;
+                    font-family: 'Source Sans Pro';
+                    font-size: 48px;
+                }
+
+                div {
+                    text-align: left;
+                    text-shadow: 0 2px 10px $transparent-black;
+                    font-family: 'Source Sans Pro';
+                    font-size: 28px;
+                }
+            }
+
+            &[data-ref='try-again'] {
+                top: 0;
+                left: 0;
+                background-color: $sort-game-level-up-background;
+                width: 100%;
+                height: 100%;
+
+                .minion {
+                    position: absolute;
+                    top: 410px;
+                    left: 140px;
+                    width: 320px;
+                }
+
+                div {
+                    position: absolute;
+                    top: 10px;
+                    left: 120px;
+                    transform: rotate(180deg);
+                    transition: transform 1s;
+                    background-image: url($frame + 'try.again.frame.png');
+                    background-repeat: no-repeat;
+                    background-size: contain;
+                    width: 740px;
+                    height: 600px;
+                    font-family: 'Source Sans Pro';
+                    font-size: 32px;
+                    transform-origin: 50% 100%;
+                }
+
+                h3 {
+                    @include text-stroke(2, $white);
+                    color: $sort-game-level-up-h2;
+                    font-family: 'Molot';
+                    font-size: 132px;
+                }
+
+                &.OPEN {
+                    div {
+                        transform: rotate(0deg);
+                    }
+                }
+            }
+        }
+
+        .close-reveal {
+            position: absolute;
+            top: 30px;
+            left: 700px;
+            z-index: 1;
+            background-position: -450px 0;
+            width: 160px;
+            height: 40px;
+
+            &:hover {
+                background-position: -450px -48px;
+            }
+        }
+
+        &.open-level-up {
+            .close-reveal {
+                display: none;
+            }
+        }
+
+        &.open-try-again {
+            .close-reveal {
+                top: 280px;
+                left: 338px;
+                background-image: url($sprite + 'sprite.nav.png');
+                background-position: -910px 0;
+                width: 284px;
+                height: 70px;
+
+                &:hover {
+                    background-position: -910px -69px;
+                }
+            }
+        }
+    }
+}

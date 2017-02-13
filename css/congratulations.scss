@@ -1,0 +1,41 @@
+@import 'variables';
+@import 'mixins';
+
+#congratulations {
+    .screen-content {
+        &::before {
+            position: absolute;
+            bottom: 0;
+            left: 260px;
+            z-index: 1;
+            background-image: url($sprite + 'sprite.minion.png');
+            background-position: -880px 0;
+            background-size: 2200px;
+            width: 440px;
+            height: 400px;
+            content: '';
+        }
+
+        div {
+            position: absolute;
+            font-size: 100px;
+
+            $colors: $purple $green $green $purple $purple;
+            $strokes: 2 3 3 2 2;
+            $stroke-colors: $white $black $black $white $white;
+            $lefts: 60    50 620    90 630;
+            $tops:    40 150 150 260 260;
+
+            @for $i from 1 through 5 {
+                &:nth-of-type(#{$i}) {
+                    @include text-stroke(nth($strokes, $i), nth($stroke-colors, $i));
+                    top: #{nth($tops, $i)}px;
+                    left: #{nth($lefts, $i)}px;
+                    // scss-lint:disable VariableForProperty
+                    color: nth($colors, $i);
+                    // scss-lint:enable VariableForProperty
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,89 @@
+@import 'variables';
+
+#flip {
+    font-family: 'Source Sans Pro';
+
+    .printer {
+        position: absolute;
+        top: 110px;
+        left: 270px;
+        width: 400px;
+    }
+
+    .earned-flip {
+        display: none;
+        position: absolute;
+        top: 140px;
+        left: 10px;
+        width: 200px;
+
+        &.show {
+            display: block;
+        }
+    }
+
+    .static-flip {
+        position: absolute;
+        bottom: 270px;
+        left: 470px;
+        transition: height .25s, left 1s linear, bottom 1s cubic-bezier(.69, .05, .96, .53), transform 1s;
+        z-index: 1;
+        background-image: url($media-server + 'Flips/3D%20world/3DW-%20Static%20Image%20Flip/3DW.EarnedFlip.png');
+        background-position: left bottom;
+        background-size: 80px;
+        width: 80px;
+        height: 0;
+
+        &.layer1 {
+            height: 40px;
+        }
+
+        &.layer2 {
+            height: 80px;
+        }
+
+        &.move {
+            bottom: 70px;
+            left: 60px;
+            transform: scale(2);
+        }
+
+        &.hide {
+            display: none;
+        }
+    }
+
+    .minion {
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        width: 350px;
+    }
+
+    span {
+        text-decoration: underline;
+        color: $green;
+        font-weight: bold;
+
+        + span {
+            text-decoration: none;
+        }
+    }
+
+    p {
+        position: absolute;
+    }
+
+    .now {
+        top: 80px;
+        left: 280px;
+    }
+
+    .lets {
+        top: 320px;
+        left: 300px;
+        text-align: right;
+        font-size: 54px;
+        font-weight: bold;
+    }
+}

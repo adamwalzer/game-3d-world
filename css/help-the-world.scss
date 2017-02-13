@@ -1,0 +1,209 @@
+@import 'variables';
+
+#help-the-world {
+    $jobs: designer surgeon engineer dentist artist architect;
+
+    .header {
+        position: relative;
+        border-bottom: 12px solid $green;
+        padding: 52px 50px 40px 120px;
+        color: $green;
+        font-size: 32px;
+
+        &::before {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            background-image: url($sprite + 'sprite.minion.png');
+            background-position: -1905px -180px;
+            background-size: 2200px;
+            width: 200px;
+            height: 200px;
+            content: '';
+        }
+
+        p {
+            display: none;
+
+            &.show {
+                display: block;
+            }
+        }
+    }
+
+    .selectable {
+        display: flex;
+        margin: 0;
+        background-color: $dark-green;
+        padding: 0;
+        width: 100%;
+        height: 310px;
+        list-style: none;
+        flex-wrap: wrap;
+        justify-content: space-between;
+
+        .VOICE-OVER & {
+            pointer-events: none;
+        }
+
+        li {
+            margin-bottom: .2%;
+            background-image: url($sprite + 'sprite.realworldgallery.png');
+            background-size: 6000px;
+            width: 33.2%;
+            height: 49.8%;
+
+            $background-lefts:             340 1340 2340 3340 4340 5340;
+            $background-tops:                 77     76     77     77     81     77;
+            $background-hover-tops:    397    396    397    397    397    397;
+
+            @for $i from 1 through 6 {
+                &[data-ref=#{nth($jobs, $i)}] {
+                    background-position: -#{nth($background-lefts, $i)}px -#{nth($background-tops, $i)}px;
+
+                    &.HIGHLIGHTED,
+                    &:hover {
+                        background-position: -#{nth($background-lefts, $i)}px -#{nth($background-hover-tops, $i)}px;
+                    }
+                }
+            }
+        }
+    }
+
+    .reveal {
+        position: absolute;
+        top: 0;
+        left: 0;
+        transition: opacity .5s, z-index 0 .5s;
+        opacity: 0;
+        z-index: -1;
+        width: 100%;
+        height: 100%;
+        list-style: none;
+
+        .VOICE-OVER & {
+            pointer-events: none;
+        }
+
+        &.OPEN {
+            transition: opacity .5s, z-index 0;
+            opacity: 1;
+            z-index: 1;
+        }
+
+        li {
+            display: none;
+            position: absolute;
+            top: 0;
+            left: 0;
+            transition: display 0s .5s;
+            background-image: url($image + 'bk.1.jpg');
+            background-size: contain;
+            width: 100%;
+            height: 100%;
+            color: $green;
+
+            &.OPEN {
+                display: block;
+            }
+
+            h3 {
+                position: absolute;
+                top: 40px;
+                left: 200px;
+                text-align: left;
+                font-size: 72px;
+            }
+
+            div {
+                position: absolute;
+                top: 140px;
+                left: 200px;
+                transform: translateY(-50%);
+                margin-top: 20px;
+                text-align: left;
+                line-height: 36px;
+                font-family: 'Source Sans Pro';
+                font-size: 36px;
+            }
+
+            button {
+                position: absolute;
+                top: 470px;
+                left: 750px;
+                transition: opacity .5s;
+                opacity: 1;
+                z-index: 1;
+                background-image: url($sprite + 'sprite.gallerynav.png');
+                background-repeat: no-repeat;
+                background-position: -315px 0;
+                background-size: 550px;
+                width: 190px;
+                height: 40px;
+
+                .VOICE-OVER & {
+                    opacity: 0;
+                }
+
+                &:hover {
+                    background-position: -315px -41px;
+                }
+            }
+
+            &::before {
+                position: absolute;
+                bottom: 322px;
+                left: 0;
+                background-image: url($sprite + 'sprite.minion.png');
+                background-position: -1905px -180px;
+                background-size: 2200px;
+                width: 200px;
+                height: 200px;
+                content: '';
+            }
+
+            &::after {
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                border-top: 12px solid $green;
+                background-image: url($sprite + 'sprite.realworldgallery.png');
+                background-size: 6000px;
+                width: 100%;
+                height: 310px;
+                content: '';
+            }
+
+            $background-lefts:    0 1000 2000 3000 4000 5000;
+            $background-tops: 640    640    640    640    640    640;
+            @for $i from 1 through 6 {
+                &[data-ref=#{nth($jobs, $i)}] {
+                    &::after {
+                        background-position: -#{nth($background-lefts, $i)}px -#{nth($background-tops, $i)}px;
+                    }
+                }
+            }
+        }
+
+        .close-reveal {
+            position: absolute;
+            top: 470px;
+            left: 460px;
+            transition: opacity .5s;
+            background-image: url($sprite + 'sprite.gallerynav.png');
+            background-repeat: no-repeat;
+            background-position: 0 0;
+            background-size: 550px;
+            width: 280px;
+            height: 40px;
+
+            &:hover {
+                background-position: 0 -41px;
+            }
+
+            .VOICE-OVER & {
+                opacity: 0;
+            }
+        }
+    }
+}

@@ -1,0 +1,40 @@
+@import 'variables';
+
+#now-that-you-learned {
+    font-family: 'Source Sans Pro';
+    font-size: 46px;
+
+    .screen-content div {
+        padding-top: 60px;
+    }
+
+    span {
+        color: $green;
+        font-weight: bold;
+    }
+
+    .next-screen {
+        right: 380px;
+        bottom: 170px;
+        background-image: url($sprite + 'sprite.nav.png');
+        background-position: -335px 0;
+        width: 230px;
+        height: 70px;
+
+        &:hover {
+            background-position: -335px -72px;
+        }
+    }
+
+    &::after {
+        position: absolute;
+        bottom: 0;
+        left: 405px;
+        background-image: url($sprite + 'sprite.minion.png');
+        background-position: -1905px -180px;
+        background-size: 2200px;
+        width: 150px;
+        height: 200px;
+        content: '';
+    }
+}
