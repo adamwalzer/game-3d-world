@@ -1,4 +1,4 @@
-export default function (props, ref, key, what) {
+export default function (props, ref, key, why) {
     return (
         <skoash.Screen
             {...props}
