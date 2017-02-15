@@ -33,6 +33,7 @@ do
     eval $(docker-machine env $target_docker_name)
 
     echo "[pre-push] Running lint"
+    echo $PWD
     docker-compose run -T --rm node gulp lint --color >> push.log 2>&1
 
     if [ $? != 0 ]; then
