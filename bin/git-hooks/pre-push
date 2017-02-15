@@ -19,6 +19,7 @@ do
     git checkout $local_sha -q
     echo "[pre-push] checking out $local_sha"
 
+    currentdir="$PWD"
     parentdir="$(dirname "$(dirname "$PWD")")"
     bash $parentdir/bin/setup-docker.sh $target_docker_name
     if [ $? != 0 ]
@@ -38,7 +39,7 @@ do
         echo "[91m[pre-push] failed: build failed linting[0m"
         cat configlint.log 2>/dev/null
         cat jslint.log 2>/dev/null
-        git checkout $current_branch
+        cd currentdir && git checkout $current_branch
         exit 157
     fi
 
