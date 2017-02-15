@@ -33,7 +33,7 @@ do
     eval $(docker-machine env $target_docker_name)
 
     echo "[pre-push] Running lint"
-    cd ../../ && docker-compose run -T --rm node gulp lint --color >> push.log 2>&1
+    cd ../../ && docker-compose run -T --rm node gulp lint --dir $currentdir --color >> push.log 2>&1
 
     if [ $? != 0 ]; then
         echo "[91m[pre-push] failed: build failed linting[0m"
