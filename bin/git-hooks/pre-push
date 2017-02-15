@@ -39,16 +39,15 @@ do
         echo "[91m[pre-push] failed: build failed linting[0m"
         cat configlint.log 2>/dev/null
         cat jslint.log 2>/dev/null
+        cd currentdir && git checkout $current_branch
         exit 157
     fi
-
-    cd currentdir && git checkout $current_branch
 
     echo "" > configlint.log
     echo "" > jslint.log
     echo "" > scsslint.json
     echo "" > push_test.log
 
-    git checkout $current_branch
+    cd currentdir && git checkout $current_branch
     echo "[92m[pre-push] success: build passed[0m"
 done
