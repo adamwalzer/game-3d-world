@@ -39,9 +39,10 @@ do
         echo "[91m[pre-push] failed: build failed linting[0m"
         cat configlint.log 2>/dev/null
         cat jslint.log 2>/dev/null
-        cd currentdir && git checkout $current_branch
         exit 157
     fi
+
+    cd currentdir && git checkout $current_branch
 
     echo "" > configlint.log
     echo "" > jslint.log
