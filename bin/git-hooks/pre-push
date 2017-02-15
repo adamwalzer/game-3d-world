@@ -19,6 +19,7 @@ do
     git checkout $local_sha -q
     echo "[pre-push] checking out $local_sha"
 
+    gamefolder=${PWD##*/}
     currentdir="$PWD"
     parentdir="$(dirname "$(dirname "$PWD")")"
     bash $parentdir/bin/setup-docker.sh $target_docker_name
@@ -33,7 +34,7 @@ do
     eval $(docker-machine env $target_docker_name)
 
     echo "[pre-push] Running lint"
-    cd ../../ && docker-compose run -T --rm node gulp lint --dir $currentdir --color >> push.log 2>&1
+    cd ../../ && docker-compose run -T --rm node gulp lint --dir $gamefolder --color >> push.log 2>&1
 
     if [ $? != 0 ]; then
         echo "[91m[pre-push] failed: build failed linting[0m"
