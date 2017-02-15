@@ -25,7 +25,7 @@ do
     if [ $? != 0 ]
     then
         >&2 echo "[91m[pre-push] failed: no $target_docker_name docker-machine running[0m"
-        git checkout $current_branch
+        cd $currentdir && git checkout $current_branch
         exit 1
     fi
 
