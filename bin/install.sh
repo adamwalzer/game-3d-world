@@ -1,5 +1,12 @@
 #!/usr/bin/env bash
 
+echo "[installer] Initializing Git"
+git init
+git remote add origin git@github.com:ginasink/${PWD##*/}.git
+git add .
+git commit -am "Initial Commit"
+git push origin master
+
 echo "[installer] Installing hooks"
 bash $PWD/bin/install-git-hooks.sh
 
