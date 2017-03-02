@@ -54,6 +54,7 @@
         p {
             display: inline-block;
             position: relative;
+            width: 0;
             overflow: hidden;
             white-space: nowrap;
             font-size: inherit;
@@ -75,7 +76,7 @@
                 }
 
                 p {
-                    animation: type#{$i} #{$i * 1.25}s steps($steps, end);
+                    animation: type#{$i} #{$i * 1.25}s steps($steps, end) forwards;
                 }
             }
         }
