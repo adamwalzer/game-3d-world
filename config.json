@@ -2,7 +2,7 @@
     "id": "3d-world",
     "title": "3D World",
     "version": 1,
-    "skoash": "1.1.3",
+    "skoash": "1.1.5",
     "dimensions": {
         "width": 960,
         "height": 540
