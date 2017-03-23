@@ -226,29 +226,29 @@ export default function (props, ref, key, opts = {}) {
                     </div>
                 </Dropper>
                 <Catcher
-                  completeOnStart
-                  checkComplete={false}
-                  start={_.get(props, 'data.game.start', false)}
-                  bucket={[
-                      <skoash.Component className="plastic" message="plastic" />,
-                      <skoash.Component className="metal" message="metal" />,
-                      <skoash.Component className="other" message="other" />,
-                  ]}
-                  catchableRefs={_.get(props, 'data.dropper.refs', [])}
-                  onCorrect={onCorrectCatch}
-                  onIncorrect={onIncorrectCatch}
-                  assets={[
-                      <skoash.Audio
-                      type="voiceOver"
-                      ref="correct"
-                      src={CMWN.MEDIA.EFFECT + 'Correct.mp3'}
-                    />,
-                      <skoash.Audio
-                      type="voiceOver"
-                      ref="incorrect"
-                      src={CMWN.MEDIA.EFFECT + 'Incorrect.mp3'}
-                    />,
-                  ]}
+                    completeOnStart
+                    checkComplete={false}
+                    start={_.get(props, 'data.game.start', false)}
+                    bucket={[
+                        <skoash.Component className="plastic" message="plastic" />,
+                        <skoash.Component className="metal" message="metal" />,
+                        <skoash.Component className="other" message="other" />,
+                    ]}
+                    catchableRefs={_.get(props, 'data.dropper.refs', [])}
+                    onCorrect={onCorrectCatch}
+                    onIncorrect={onIncorrectCatch}
+                    assets={[
+                        <skoash.Audio
+                            type="voiceOver"
+                            ref="correct"
+                            src={CMWN.MEDIA.EFFECT + 'Correct.mp3'}
+                        />,
+                        <skoash.Audio
+                            type="voiceOver"
+                            ref="incorrect"
+                            src={CMWN.MEDIA.EFFECT + 'Incorrect.mp3'}
+                        />,
+                    ]}
                 />
             </skoash.Component>
             <skoash.Reveal
