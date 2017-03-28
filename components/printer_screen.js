@@ -4,7 +4,7 @@ import Target from 'shared/components/target/0.2';
 import Dropzone from 'shared/components/dropzone/0.4';
 import Draggable from 'shared/components/draggable/0.4';
 
-const objects = [
+const OBJECTS = [
     'umbrella',
     'glasses',
     'tire',
@@ -21,7 +21,7 @@ const objects = [
     'ball',
 ];
 
-const targets = [
+const TARGETS = [
     'tire',
     'link',
     'cup',
@@ -29,31 +29,49 @@ const targets = [
     'tooth',
 ];
 
-export default function (props, ref, key) {
-    var onStart;
-    var startGame;
-    var closeReveal;
-    var onCorrect;
-    var onPrinted;
-    var reset;
-    var onTransitionEnd;
-
-    onStart = function () {
-        _.each(this.refs.bottom.refs.slider.refs, slide => {
-            _.each(slide.refs, draggable => {
-                draggable.markIncorrect();
-            });
+let onStart = function () {
+    _.each(this.refs.bottom.refs.slider.refs, slide => {
+        _.each(slide.refs, draggable => {
+            draggable.markIncorrect();
         });
-    };
+    });
+};
 
-    startGame = function () {
+let startGame = function () {
+    skoash.trigger('updateState', {
+        path: 'reveal',
+        data: {
+            open: 'drag-it-here',
+        },
+    });
+};
+
+let onCorrect = function (dropped) {
+    skoash.trigger('updateState', {
+        path: 'printed',
+        data: dropped,
+    });
+    skoash.trigger('updateState', {
+        path: 'sfx',
+        data: {
+            playing: 'print'
+        },
+    });
+};
+
+let reset = function () {
+    _.each(['printed', 'transition', 'layer1', 'layer2', 'layer3'], v => {
         skoash.trigger('updateState', {
-            path: 'reveal',
-            data: {
-                open: 'drag-it-here',
-            },
+            path: v,
+            data: false,
         });
-    };
+    });
+};
+
+export default function (props, ref, key) {
+    let closeReveal;
+    let onPrinted;
+    let onTransitionEnd;
 
     closeReveal = function () {
         skoash.trigger('updateState', {
@@ -68,19 +86,6 @@ export default function (props, ref, key) {
                 index: parseInt(props.index, 10) + 1,
             });
         }
-    };
-
-    onCorrect = function (dropped) {
-        skoash.trigger('updateState', {
-            path: 'printed',
-            data: dropped,
-        });
-        skoash.trigger('updateState', {
-            path: 'sfx',
-            data: {
-                playing: 'print'
-            },
-        });
     };
 
     onPrinted = function () {
@@ -108,15 +113,6 @@ export default function (props, ref, key) {
                 },
             });
         }
-    };
-
-    reset = function () {
-        _.each(['printed', 'transition', 'layer1', 'layer2', 'layer3'], (v) => {
-            skoash.trigger('updateState', {
-                path: v,
-                data: false,
-            });
-        });
     };
 
     onTransitionEnd = function () {
@@ -233,27 +229,27 @@ export default function (props, ref, key) {
                 />
                 <skoash.Audio
                     type="voiceOver"
-                    ref={targets[0]}
+                    ref={TARGETS[0]}
                     src={CMWN.MEDIA.VO + 'VO_level1_great.mp3'}
                 />
                 <skoash.Audio
                     type="voiceOver"
-                    ref={targets[1]}
+                    ref={TARGETS[1]}
                     src={CMWN.MEDIA.VO + 'VO_level2_amazing.mp3'}
                 />
                 <skoash.Audio
                     type="voiceOver"
-                    ref={targets[2]}
+                    ref={TARGETS[2]}
                     src={CMWN.MEDIA.VO + 'VO_level3_excellent.mp3'}
                 />
                 <skoash.Audio
                     type="voiceOver"
-                    ref={targets[3]}
+                    ref={TARGETS[3]}
                     src={CMWN.MEDIA.VO + 'VO_level4_one_more.mp3'}
                 />
                 <skoash.Audio
                     type="voiceOver"
-                    ref={targets[4]}
+                    ref={TARGETS[4]}
                     src={CMWN.MEDIA.VO + 'VO_level5_wizard.mp3'}
                 />
             </skoash.MediaCollection>
@@ -267,11 +263,11 @@ export default function (props, ref, key) {
                     checkComplete={false}
                     complete={_.get(props, 'data.setTarget', 0) > 4}
                     targets={[
-                        <skoash.Component name={targets[0]} />,
-                        <skoash.Component name={targets[1]} />,
-                        <skoash.Component name={targets[2]} />,
-                        <skoash.Component name={targets[3]} />,
-                        <skoash.Component name={targets[4]} />,
+                        <skoash.Component name={TARGETS[0]} />,
+                        <skoash.Component name={TARGETS[1]} />,
+                        <skoash.Component name={TARGETS[2]} />,
+                        <skoash.Component name={TARGETS[3]} />,
+                        <skoash.Component name={TARGETS[4]} />,
                     ]}
                 />
             </skoash.Component>
@@ -279,7 +275,7 @@ export default function (props, ref, key) {
                 dropped={_.get(props, 'data.draggable.dropped')}
                 dropzones={[
                     <skoash.Component
-                    answers={objects}
+                    answers={OBJECTS}
                     className={classNames(_.get(props, 'data.printed.props.message'), {
                         transition: _.get(props, 'data.transition'),
                         layer1: _.get(props, 'data.layer1.playing'),
@@ -300,78 +296,78 @@ export default function (props, ref, key) {
                         <Draggable
                             returnOnIncorrect
                             stayOnCorrect={false}
-                            message={objects[0]}
+                            message={OBJECTS[0]}
                         />
                         <Draggable
                             returnOnIncorrect
                             stayOnCorrect={false}
-                            message={objects[1]}
+                            message={OBJECTS[1]}
                         />
                         <Draggable
                             returnOnIncorrect
                             stayOnCorrect={false}
-                            message={objects[2]}
+                            message={OBJECTS[2]}
                         />
                         <Draggable
                             returnOnIncorrect
                             stayOnCorrect={false}
-                            message={objects[3]}
-                        />
-                    </skoash.Component>
-                    <skoash.Component>
-                        <Draggable
-                            returnOnIncorrect
-                            stayOnCorrect={false}
-                            message={objects[4]}
-                        />
-                        <Draggable
-                            returnOnIncorrect
-                            stayOnCorrect={false}
-                            message={objects[5]}
-                        />
-                        <Draggable
-                            returnOnIncorrect
-                            stayOnCorrect={false}
-                            message={objects[6]}
-                        />
-                        <Draggable
-                            returnOnIncorrect
-                            stayOnCorrect={false}
-                            message={objects[7]}
+                            message={OBJECTS[3]}
                         />
                     </skoash.Component>
                     <skoash.Component>
                         <Draggable
                             returnOnIncorrect
                             stayOnCorrect={false}
-                            message={objects[8]}
+                            message={OBJECTS[4]}
                         />
                         <Draggable
                             returnOnIncorrect
                             stayOnCorrect={false}
-                            message={objects[9]}
+                            message={OBJECTS[5]}
                         />
                         <Draggable
                             returnOnIncorrect
                             stayOnCorrect={false}
-                            message={objects[10]}
+                            message={OBJECTS[6]}
                         />
                         <Draggable
                             returnOnIncorrect
                             stayOnCorrect={false}
-                            message={objects[11]}
+                            message={OBJECTS[7]}
                         />
                     </skoash.Component>
                     <skoash.Component>
                         <Draggable
                             returnOnIncorrect
                             stayOnCorrect={false}
-                            message={objects[12]}
+                            message={OBJECTS[8]}
                         />
                         <Draggable
                             returnOnIncorrect
                             stayOnCorrect={false}
-                            message={objects[13]}
+                            message={OBJECTS[9]}
+                        />
+                        <Draggable
+                            returnOnIncorrect
+                            stayOnCorrect={false}
+                            message={OBJECTS[10]}
+                        />
+                        <Draggable
+                            returnOnIncorrect
+                            stayOnCorrect={false}
+                            message={OBJECTS[11]}
+                        />
+                    </skoash.Component>
+                    <skoash.Component>
+                        <Draggable
+                            returnOnIncorrect
+                            stayOnCorrect={false}
+                            message={OBJECTS[12]}
+                        />
+                        <Draggable
+                            returnOnIncorrect
+                            stayOnCorrect={false}
+                            message={OBJECTS[13]}
                         />
                     </skoash.Component>
                 </skoash.Slider>
@@ -409,7 +405,7 @@ export default function (props, ref, key) {
                     </skoash.Component>,
                     <skoash.Component
                         type="li"
-                        ref={targets[0]}
+                        ref={TARGETS[0]}
                     >
                         <h3>
                             GREAT JOB!
@@ -422,7 +418,7 @@ export default function (props, ref, key) {
                     </skoash.Component>,
                     <skoash.Component
                         type="li"
-                        ref={targets[1]}
+                        ref={TARGETS[1]}
                     >
                         <h3>
                             YOU HAVE AMAZING<br/>
@@ -436,7 +432,7 @@ export default function (props, ref, key) {
                     </skoash.Component>,
                     <skoash.Component
                         type="li"
-                        ref={targets[2]}
+                        ref={TARGETS[2]}
                     >
                         <h3>
                             EXCELLENT<br/>
@@ -449,7 +445,7 @@ export default function (props, ref, key) {
                     </skoash.Component>,
                     <skoash.Component
                         type="li"
-                        ref={targets[3]}
+                        ref={TARGETS[3]}
                     >
                         <h3>
                             YOU’VE DONE<br/>
@@ -462,7 +458,7 @@ export default function (props, ref, key) {
                     </skoash.Component>,
                     <skoash.Component
                         type="li"
-                        ref={targets[4]}
+                        ref={TARGETS[4]}
                     >
                         <h3>
                             YOU’RE A<br/>

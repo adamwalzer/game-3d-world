@@ -44,52 +44,59 @@ let catchablesArray = _.reduce(categoryArray, (a, category) =>
     ))
 , []);
 
+let onCloseReveal = function () {
+    this.updateGameState({
+        path: 'game',
+        data: {
+            stop: false,
+            start: true,
+            restart: false,
+        },
+    });
+    this.updateGameState({
+        path: 'closeReveal',
+        data: false,
+    });
+    this.updateGameState({
+        path: 'openReveal',
+        data: null,
+    });
+    this.updateGameState({
+        path: 'score',
+        data: {
+            correct: 0,
+            incorrect: 0,
+        }
+    });
+};
+
+let onScoreComplete = function () {
+    this.updateGameState({
+        path: 'openReveal',
+        data: 'level-up',
+    });
+    this.updateGameState({
+        path: 'game',
+        data: {
+            complete: true,
+        },
+    });
+};
+
+let onAddClassName = function (className) {
+    if (className === 'go') return;
+    this.updateGameState({
+        path: 'sfx',
+        data: {
+            playing: 'print'
+        }
+    });
+};
+
 export default function (props, ref, key, opts = {}) {
-    var onCloseReveal;
-    var onScoreComplete;
-    var onTimerComplete;
-    var onAddClassName;
-    var onCorrectCatch;
-    var onIncorrectCatch;
-
-    onCloseReveal = function () {
-        this.updateGameState({
-            path: 'game',
-            data: {
-                stop: false,
-                start: true,
-                restart: false,
-            },
-        });
-        this.updateGameState({
-            path: 'closeReveal',
-            data: false,
-        });
-        this.updateGameState({
-            path: 'openReveal',
-            data: null,
-        });
-        this.updateGameState({
-            path: 'score',
-            data: {
-                correct: 0,
-                incorrect: 0,
-            }
-        });
-    };
-
-    onScoreComplete = function () {
-        this.updateGameState({
-            path: 'openReveal',
-            data: 'level-up',
-        });
-        this.updateGameState({
-            path: 'game',
-            data: {
-                complete: true,
-            },
-        });
-    };
+    let onTimerComplete;
+    let onCorrectCatch;
+    let onIncorrectCatch;
 
     onTimerComplete = function () {
         if (_.get(props, 'data.openReveal') === 'level-up') return;
@@ -102,16 +109,6 @@ export default function (props, ref, key, opts = {}) {
             data: {
                 start: false,
             },
-        });
-    };
-
-    onAddClassName = function (className) {
-        if (className === 'go') return;
-        this.updateGameState({
-            path: 'sfx',
-            data: {
-                playing: 'print'
-            }
         });
     };
 
