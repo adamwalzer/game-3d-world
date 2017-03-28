@@ -21,9 +21,7 @@ import FlipScreen from './components/flip_screen';
 
 import QuitScreen from 'shared/components/quit_screen/0.1';
 
-var ThreeDWorld;
-
-ThreeDWorld = (
+skoash.start(
     <skoash.Game
         config={config}
         loader={<Loader />}
@@ -98,7 +96,5 @@ ThreeDWorld = (
         }}
     />
 );
-
-skoash.start(ThreeDWorld);
 
 if (module.hot) module.hot.accept();

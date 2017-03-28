@@ -1,5 +1,4 @@
 import Dropper from 'shared/components/dropper/0.3';
-import Randomizer from 'shared/components/randomizer/0.1';
 import Catcher from 'shared/components/catcher/0.2';
 import Catchable from 'shared/components/catchable/0.1';
 
@@ -207,7 +206,7 @@ export default function (props, ref, key, opts = {}) {
                     prepTimeout={opts.prepTimeout}
                     onAddClassName={onAddClassName}
                     bin={
-                      <Randomizer
+                      <skoash.Randomizer
                           completeOnStart
                           checkComplete={false}
                           bin={catchablesArray}

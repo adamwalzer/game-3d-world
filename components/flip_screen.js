@@ -1,9 +1,7 @@
 import classNames from 'classnames';
 
 export default function (props, ref, key) {
-    var onTransitionEnd;
-
-    onTransitionEnd = function () {
+    let onTransitionEnd = function () {
         if (!_.get(props, 'data.layer2.complete')) return;
         skoash.trigger('updateState', {
             path: 'flip',

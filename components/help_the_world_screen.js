@@ -1,37 +1,37 @@
 import classNames from 'classnames';
 
-export default function (props, ref, key) {
-    const jobs = [
-        'designer',
-        'architect',
-        'surgeon',
-        'engineer',
-        'dentist',
-        'artist',
-    ];
+let jobs = [
+    'designer',
+    'architect',
+    'surgeon',
+    'engineer',
+    'dentist',
+    'artist',
+];
 
-    var nextPhoto = function () {
+let onClose = function () {
+    skoash.trigger('updateState', {
+        path: 'selectable',
+        data: {
+            target: null
+        }
+    });
+    skoash.trigger('updateState', {
+        path: 'reveal',
+        data: {
+            open: null
+        }
+    });
+};
+
+export default function (props, ref, key) {
+    let nextPhoto = function () {
         skoash.trigger('updateState', {
             path: 'selectable',
             data: {
                 select: jobs[
                     (jobs.indexOf(_.get(props, 'data.selectable.target.props.data-ref')) + 1) % jobs.length
                 ]
-            }
-        });
-    };
-
-    var onClose = function () {
-        skoash.trigger('updateState', {
-            path: 'selectable',
-            data: {
-                target: null
-            }
-        });
-        skoash.trigger('updateState', {
-            path: 'reveal',
-            data: {
-                open: null
             }
         });
     };
@@ -147,65 +147,65 @@ export default function (props, ref, key) {
                 onClose={onClose}
                 list={[
                     <skoash.Component
-                      type="li"
-                      data-ref={jobs[0]}
+                        type="li"
+                        data-ref={jobs[0]}
                     >
                         <h3>
-                          Product designers
+                            Product designers
                         </h3>
                         <div>
-                          design and print useful objects for others!
+                            design and print useful objects for others!
                         </div>
                         <button className="next-photo" onClick={nextPhoto} />
                     </skoash.Component>,
                     <skoash.Component
-                      type="li"
-                      data-ref={jobs[1]}
+                        type="li"
+                        data-ref={jobs[1]}
                     >
                         <h3>
-                          Architects
+                            Architects
                         </h3>
                         <div>
-                          create plans for housing that will<br/>
-                          be 3D printed!
+                            create plans for housing that will<br/>
+                            be 3D printed!
                         </div>
                         <button className="next-photo" onClick={nextPhoto} />
                     </skoash.Component>,
                     <skoash.Component
-                      type="li"
-                      data-ref={jobs[2]}
+                        type="li"
+                        data-ref={jobs[2]}
                     >
                         <h3>
-                          Surgeon
+                            Surgeon
                         </h3>
                         <div>
-                          turn x-rays into 3D models<br/>
-                          and repair injured body parts!
+                            turn x-rays into 3D models<br/>
+                            and repair injured body parts!
                         </div>
                         <button className="next-photo" onClick={nextPhoto} />
                     </skoash.Component>,
                     <skoash.Component
-                      type="li"
-                      data-ref={jobs[3]}
+                        type="li"
+                        data-ref={jobs[3]}
                     >
                         <h3>
-                          Engineers
+                            Engineers
                         </h3>
                         <div>
-                          make 3D models of your creations,<br/>
-                          and then print the real thing!
+                            make 3D models of your creations,<br/>
+                            and then print the real thing!
                         </div>
                         <button className="next-photo" onClick={nextPhoto} />
                     </skoash.Component>,
                     <skoash.Component
-                      type="li"
-                      data-ref={jobs[4]}
+                        type="li"
+                        data-ref={jobs[4]}
                     >
                         <h3>
-                          Dentists
+                            Dentists
                         </h3>
                         <div>
-                          print replacement teeth for your patients!
+                            print replacement teeth for your patients!
                         </div>
                         <button className="next-photo" onClick={nextPhoto} />
                     </skoash.Component>,
@@ -214,11 +214,11 @@ export default function (props, ref, key) {
                       data-ref={jobs[5]}
                     >
                         <h3>
-                          Artists
+                            Artists
                         </h3>
                         <div>
-                          express themselves through the magic<br/>
-                          of 3D printing!
+                            express themselves through the magic<br/>
+                            of 3D printing!
                         </div>
                         <button className="next-photo" onClick={nextPhoto} />
                     </skoash.Component>,

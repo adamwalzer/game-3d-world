@@ -1,5 +1,12 @@
 import classNames from 'classnames';
 
+let onStart = function () {
+    this.updateGameState({
+        path: 'start',
+        data: true,
+    });
+};
+
 export default function (props, ref, key) {
     return (
         <skoash.Screen
@@ -7,12 +14,7 @@ export default function (props, ref, key) {
             ref={ref}
             key={key}
             id="many-materials"
-            onStart={function () {
-                this.updateGameState({
-                    path: 'start',
-                    data: true,
-                });
-            }}
+            onStart={onStart}
         >
             <skoash.Audio
                 type="voiceOver"
