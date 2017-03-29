@@ -94,11 +94,13 @@ let onAddClassName = function (className) {
 };
 
 export default function (props, ref, key, opts = {}) {
-    let onTimerComplete;
-    let onCorrectCatch;
-    let onIncorrectCatch;
+    let start = _.get(props, 'data.game.start', false);
+    let complete = _.get(props, 'data.game.complete', false);
+    let correct = _.get(props, 'data.score.correct', 0);
+    let incorrect = _.get(props, 'data.score.incorrect', 0);
+    let paused = _.get(props, 'gameState.paused');
 
-    onTimerComplete = function () {
+    let onTimerComplete = function () {
         if (_.get(props, 'data.openReveal') === 'level-up') return;
         this.updateGameState({
             path: 'openReveal',
@@ -112,7 +114,7 @@ export default function (props, ref, key, opts = {}) {
         });
     };
 
-    onCorrectCatch = function (bucketRef) {
+    let onCorrectCatch = function (bucketRef) {
         bucketRef.addClassName('correct');
         setTimeout(() => {
             bucketRef.removeClassName('correct');
@@ -120,12 +122,12 @@ export default function (props, ref, key, opts = {}) {
         this.updateGameState({
             path: 'score',
             data: {
-                correct: _.get(props, 'data.score.correct', 0) + 1,
+                correct: correct + 1,
             },
         });
     };
 
-    onIncorrectCatch = function (bucketRef) {
+    let onIncorrectCatch = function (bucketRef) {
         bucketRef.addClassName('incorrect');
         setTimeout(() => {
             bucketRef.removeClassName('incorrect');
@@ -133,7 +135,7 @@ export default function (props, ref, key, opts = {}) {
         this.updateGameState({
             path: 'score',
             data: {
-                incorrect: _.get(props, 'data.score.incorrect', 0) + 1,
+                incorrect: incorrect + 1,
             },
         });
     };
@@ -161,8 +163,8 @@ export default function (props, ref, key, opts = {}) {
                 <skoash.Score
                     max={100}
                     increment={10}
-                    correct={_.get(props, 'data.score.correct', 0)}
-                    incorrect={_.get(props, 'data.score.incorrect', 0)}
+                    correct={correct}
+                    incorrect={incorrect}
                     onComplete={onScoreComplete}
                 >
                   <div />
@@ -171,10 +173,10 @@ export default function (props, ref, key, opts = {}) {
                     countDown
                     timeout={opts.timeout}
                     leadingContent="TIME LEFT"
-                    stop={_.get(props, 'data.game.complete', false)}
-                    complete={_.get(props, 'data.game.complete', false)}
-                    checkComplete={_.get(props, 'data.game.start', false)}
-                    restart={_.get(props, 'data.game.start', false)}
+                    stop={complete}
+                    complete={complete}
+                    checkComplete={start}
+                    restart={start}
                     onComplete={onTimerComplete}
                 />
             </skoash.Component>
@@ -196,9 +198,9 @@ export default function (props, ref, key, opts = {}) {
                     src={CMWN.MEDIA.IMAGE + 'plus.png'}
                 />
                 <Dropper
-                    on={_.get(props, 'data.game.start', false) && !_.get(props, 'gameState.paused')}
-                    start={_.get(props, 'data.game.start', false)}
-                    stop={_.get(props, 'data.game.complete', false)}
+                    on={start && !paused}
+                    start={start}
+                    stop={complete}
                     prepClasses={['starting', 'ready', 'set', 'go']}
                     prepTimeout={opts.prepTimeout}
                     onAddClassName={onAddClassName}
@@ -224,7 +226,7 @@ export default function (props, ref, key, opts = {}) {
                 <Catcher
                     completeOnStart
                     checkComplete={false}
-                    start={_.get(props, 'data.game.start', false)}
+                    start={start}
                     bucket={[
                         <skoash.Component className="plastic" message="plastic" />,
                         <skoash.Component className="metal" message="metal" />,
