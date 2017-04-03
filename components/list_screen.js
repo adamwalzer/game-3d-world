@@ -26,6 +26,9 @@ export default function (props, ref, key) {
             ref={ref}
             key={key}
             id="list"
+            emitOnComplete={{
+                name: 'flip',
+            }}
         >
             <skoash.Image
                 className="hidden"
