@@ -1,5 +1,4 @@
-const src = 'https://res.cloudinary.com/changemyworldnow/video/upload/v1479831566/' +
-    '3D_Printing_FINAL_FILE_SMALLER_pfzv84.mp4';
+const src = `${CMWN.MEDIA.VIDEO}3d-printing.mp4`;
 
 export default function (props, ref, key) {
     return (

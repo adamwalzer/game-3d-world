@@ -23,6 +23,7 @@ export default function (props, ref, key) {
             <skoash.Audio
                 type="sfx"
                 ref="start"
+                playTarget="start"
                 src={CMWN.MEDIA.EFFECT + 'text_type.mp3'}
             />
             <skoash.Image
